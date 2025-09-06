@@ -1,14 +1,13 @@
 #include <iostream>
 using namespace std;
 
-// Node structure
+
 struct Node {
     int data;
     Node* left;
     Node* right;
 };
 
-// Create a new node
 Node* createNode(int value) {
     Node* newNode = new Node();
     newNode->data = value;
@@ -16,7 +15,6 @@ Node* createNode(int value) {
     return newNode;
 }
 
-// Insert a node into BST
 Node* insert(Node* root, int value) {
     if (root == nullptr) {
         cout << "Inserted " << value << endl;
@@ -30,7 +28,6 @@ Node* insert(Node* root, int value) {
     return root;
 }
 
-// Search in BST
 bool search(Node* root, int key) {
     if (root == nullptr) return false;
     if (root->data == key) return true;
@@ -38,14 +35,11 @@ bool search(Node* root, int key) {
     else return search(root->right, key);
 }
 
-// Find minimum node (used for deletion)
 Node* findMin(Node* root) {
     while (root && root->left != nullptr)
         root = root->left;
     return root;
 }
-
-// Delete a node from BST
 Node* deleteNode(Node* root, int key) {
     if (root == nullptr) return root;
 
@@ -54,7 +48,7 @@ Node* deleteNode(Node* root, int key) {
     } else if (key > root->data) {
         root->right = deleteNode(root->right, key);
     } else {
-        // Node found
+ 
         if (root->left == nullptr) {
             Node* temp = root->right;
             delete root;
@@ -64,7 +58,6 @@ Node* deleteNode(Node* root, int key) {
             delete root;
             return temp;
         }
-        // Node with two children
         Node* temp = findMin(root->right);
         root->data = temp->data;
         root->right = deleteNode(root->right, temp->data);
@@ -72,7 +65,6 @@ Node* deleteNode(Node* root, int key) {
     return root;
 }
 
-// Traversals
 void inorder(Node* root) {
     if (root != nullptr) {
         inorder(root->left);
@@ -100,7 +92,6 @@ void postorder(Node* root) {
 int main() {
     Node* root = nullptr;
 
-    // Insert nodes
     root = insert(root, 50);
     root = insert(root, 30);
     root = insert(root, 70);
@@ -117,7 +108,6 @@ int main() {
     postorder(root);
     cout << endl;
 
-    // Search
     int key = 40;
     cout << "\nSearching for " << key << ": ";
     if (search(root, key))
@@ -125,7 +115,6 @@ int main() {
     else
         cout << "Not Found!" << endl;
 
-    // Delete a node
     cout << "\nDeleting 50...\n";
     root = deleteNode(root, 50);
 
@@ -134,4 +123,5 @@ int main() {
     cout << endl;
 
     return 0;
+
 }
